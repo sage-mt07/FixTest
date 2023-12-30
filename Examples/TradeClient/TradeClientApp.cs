@@ -74,7 +74,18 @@ namespace TradeClient
             Console.WriteLine("logon start");
             m.Set(new Password("P@ssword"));
         }
+        public void OnMessage(QuickFix.FIX44.Logout m,SessionID s)
+        {
+            Console.WriteLine("logout");
+        }
+        public void OnMessage(QuickFix.FIX44.Heartbeat m,SessionID s)
+        {
 
+        }
+        public void OnMessage(QuickFix.FIX44.BusinessMessageReject m ,SessionID s)
+        {
+
+        }
         public void OnMessage(QuickFix.FIX44.ExecutionReport m, SessionID s)
         {
             Console.WriteLine("Received execution report");
