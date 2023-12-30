@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Examples.SimpleAcceptor": {
+      "commandName": "Project",
+      "commandLineArgs": "./simpleacc.cfg"
+    }
+  }
+}
