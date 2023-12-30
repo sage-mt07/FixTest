@@ -19,10 +19,19 @@ namespace TradeClient
             _session = Session.LookupSession(sessionID);
         }
 
-        public void OnLogon(SessionID sessionID) { Console.WriteLine("Logon - " + sessionID.ToString()); }
+        public void OnLogon(SessionID sessionID)        
+        {
+            
+            
+            Console.WriteLine("Logon - " + sessionID.ToString()); 
+            //Request
+        }
         public void OnLogout(SessionID sessionID) { Console.WriteLine("Logout - " + sessionID.ToString()); }
 
-        public void FromAdmin(Message message, SessionID sessionID) { }
+        public void FromAdmin(Message message, SessionID sessionID) {
+            Crack(message, sessionID);
+
+        }
         public void ToAdmin(Message message, SessionID sessionID) {
 
 
