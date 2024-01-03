@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.
+using QuickFix;
+using System;
+using System.IO;
 
 namespace TradeClient
 {
@@ -19,17 +20,36 @@ namespace TradeClient
             Console.WriteLine();
             Console.WriteLine("=============");
 
-            if (args.Length != 1)
-            {
-                System.Console.WriteLine("usage: TradeClient.exe CONFIG_FILENAME");
-                System.Environment.Exit(2);
-            }
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
 
-            string file = args[0];
+            // Read QuickFIX/n settings from appsettings.json
+            var quickFixConfig = configuration.GetSection("QuickFixSettings").GetChildren();
+
 
             try
             {
-                QuickFix.SessionSettings settings = new QuickFix.SessionSettings(file);
+                using var memoryStream = new MemoryStream();
+                using var writer = new StreamWriter(memoryStream);
+                    foreach (var section in quickFixConfig)
+                    {
+                        writer.WriteLine("[" + section.Key + "]");
+                        foreach (var kvp in section.GetChildren())
+                        {
+                            writer.WriteLine(kvp.Key + "=" + kvp.Value);
+                        }
+                    }
+
+                    writer.Flush();
+                    memoryStream.Position = 0;
+
+                    // Create SessionSettings from the MemoryStream
+                    var settings = new SessionSettings(memoryStream.ToString());
+
+                    // Use the settings as needed for QuickFIX/n
+
                 TradeClientApp application = new TradeClientApp();
                 QuickFix.IMessageStoreFactory storeFactory = new QuickFix.FileStoreFactory(settings);
                 QuickFix.ILogFactory logFactory = new QuickFix.ScreenLogFactory(settings);
@@ -39,7 +59,7 @@ namespace TradeClient
                 application.MyInitiator = initiator;
 
                 initiator.Start();
-                application.Run();
+                Console.Read();
                 initiator.Stop();
             }
             catch (System.Exception e)
