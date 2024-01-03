@@ -23,11 +23,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\QuickFIXn\QuickFix.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\..\LICENSE" Pack="true" PackagePath=""/>
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
     <None Include="..\..\nuget-enclosures\44-readme.md" Pack="true" PackagePath="README.md" />
     <None Include="..\..\spec\fix\FIX44.xml" Pack="true" PackagePath="DataDictionary\FIX44.xml" />
   </ItemGroup>

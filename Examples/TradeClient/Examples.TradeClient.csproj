@@ -20,14 +20,11 @@
     <None Include="..\QuickFixn-TestCA.cer" Link="QuickFixn-TestCA.cer">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="..\QuickFixn-TestClient.pfx" Link="QuickFixn-TestClient.pfx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Messages\FIX44\QuickFix.FIX44.csproj" />
-    <ProjectReference Include="..\..\QuickFIXn\QuickFix.csproj" />
+    <PackageReference Include="QuickFIXn.Core" Version="1.11.2" />
+    <PackageReference Include="QuickFIXn.FIX4.4" Version="1.11.2" />
   </ItemGroup>
 
   <ItemGroup>
